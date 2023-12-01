@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Let&#039;s Encrypt免费申请SSL证书 - 慎独</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="慎独"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="慎独"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Let’s Encrypt 是免费、开放和自动化的证书颁发机构 (CA)。我们可以从 Let’s Encrypt 获得网站域名的免费的证书。"><meta property="og:type" content="blog"><meta property="og:title" content="Let&#039;s Encrypt免费申请SSL证书"><meta property="og:url" content="http://blog.labbee.top/2023/12/01/%E5%85%8D%E8%B4%B9%E7%94%B3%E8%AF%B7SSL%E8%AF%81%E4%B9%A6/"><meta property="og:site_name" content="慎独"><meta property="og:description" content="Let’s Encrypt 是免费、开放和自动化的证书颁发机构 (CA)。我们可以从 Let’s Encrypt 获得网站域名的免费的证书。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://blog.labbee.top/img/og_image.png"><meta property="article:published_time" content="2023-12-01T03:13:00.000Z"><meta property="article:modified_time" content="2023-12-01T07:05:47.809Z"><meta property="article:author" content="Marvin Yuan"><meta property="article:tag" content="Network"><meta property="article:tag" content="SSL"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="http://blog.labbee.top/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://blog.labbee.top/2023/12/01/%E5%85%8D%E8%B4%B9%E7%94%B3%E8%AF%B7SSL%E8%AF%81%E4%B9%A6/"},"headline":"Let's Encrypt免费申请SSL证书","image":["http://blog.labbee.top/img/og_image.png"],"datePublished":"2023-12-01T03:13:00.000Z","dateModified":"2023-12-01T07:05:47.809Z","author":{"@type":"Person","name":"Marvin Yuan"},"publisher":{"@type":"Organization","name":"慎独","logo":{"@type":"ImageObject","url":"http://blog.labbee.top/img/logo.svg"}},"description":"Let’s Encrypt 是免费、开放和自动化的证书颁发机构 (CA)。我们可以从 Let’s Encrypt 获得网站域名的免费的证书。"}</script><link rel="canonical" href="http://blog.labbee.top/2023/12/01/%E5%85%8D%E8%B4%B9%E7%94%B3%E8%AF%B7SSL%E8%AF%81%E4%B9%A6/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.0.0"></head><body class="is-3-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="慎独" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2023-12-01T03:13:00.000Z" title="12/1/2023, 11:13:00 AM">2023-12-01</time>发表</span><span class="level-item"><time dateTime="2023-12-01T07:05:47.809Z" title="12/1/2023, 3:05:47 PM">2023-12-01</time>更新</span><span class="level-item"> Marvin Yuan </span><span class="level-item"><a class="link-muted" href="/categories/ToolKits/">ToolKits</a></span><span class="level-item">8 分钟读完 (大约1191个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">Let&#039;s Encrypt免费申请SSL证书</h1><div class="content"><p>Let’s Encrypt 是免费、开放和自动化的证书颁发机构 (CA)。我们可以从 <a target="_blank" rel="noopener" href="https://letsencrypt.org/">Let’s Encrypt</a> 获得网站域名的免费的证书。</p>
+<span id="more"></span>
+
+<h1 id="使用-certbot-申请-SSL-证书"><a href="#使用-certbot-申请-SSL-证书" class="headerlink" title="使用 certbot 申请 SSL 证书"></a>使用 certbot 申请 SSL 证书</h1><p><a target="_blank" rel="noopener" href="https://certbot.eff.org/">Certbot</a> 是 Let’s Encrypt 官方推荐的获取证书的客户端，可以帮我们获取免费的 Let’s Encrypt 证书。Certbot 支持所有 Unix 内核的操作系统。</p>
+<h2 id="安装-certbot"><a href="#安装-certbot" class="headerlink" title="安装 certbot"></a>安装 certbot</h2><p>Certbot 官方推荐使用 snap 安装，当然你也可以使用 yum 或者 dnf。</p>
+<ol>
+<li><p>安装 snapd</p>
+<p> Snap 已经预装在 Ubuntu 16.04 (Xenial Xerus) 及更新发行版本，如果使用旧版，可以手动安装 snap :)</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">  sudo apt install snapd</span><br></pre></td></tr></table></figure>
+
+<p> 更多 OS 安装请参考<a target="_blank" rel="noopener" href="https://snapcraft.io/docs/installing-snapd">文档</a>。</p>
+</li>
+<li><p>移除旧版</p>
+<p> 如果此前使用过其他包管理工具进行安装 certbot，推荐在安装前移除:</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># apt</span></span><br><span class="line">sudo apt-get remove certbot</span><br><span class="line"><span class="comment"># dnf</span></span><br><span class="line">sudo dnf remove certbot</span><br><span class="line"><span class="comment"># yum</span></span><br><span class="line">sudo yum remove certbot</span><br></pre></td></tr></table></figure></li>
+<li><p>安装</p>
+<p> 在命令行运行以下命令进行安装</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snap install --classic certbot</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>准备 certbot 命令</p>
+<p> 创建软链以便在终端快捷使用 certbot 命令:</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">ln</span> -s /snap/bin/certbot /usr/bin/certbot</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行</p>
+<p> 接下来，你就可以使用 certbot 来获取证书，或者对证书进行续约。具体细节请参考<a target="_blank" rel="noopener" href="https://certbot.eff.org/instructions">文档</a>。</p>
+</li>
+</ol>
+<h2 id="申请泛域名-SSL-证书以及配置自动续约"><a href="#申请泛域名-SSL-证书以及配置自动续约" class="headerlink" title="申请泛域名 SSL 证书以及配置自动续约"></a>申请泛域名 SSL 证书以及配置自动续约</h2><p>不管是申请还是续期，只要是通配符证书，只能采用 dns-01 的方式校验申请者的域名，也就是说每次续期证书我们都必须登录控制台添加对应的 TXT 记录才可以续期&#x2F;申请成功，这样不免有些麻烦。好在 certbot 提供了一个 hook，可以调用域名提供商的 API 接口来添加 TXT 记录而无需人工干预，但是官方并不支持国内的大部分服务商，这样就要用到第三方的插件了。此处我们使用的是 certbot-letencrypt-wildcardcertificates-alydns-au，本文仅简单介绍，更多细节请参考项目<a target="_blank" rel="noopener" href="https://github.com/ywdblog/certbot-letencrypt-wildcardcertificates-alydns-au">文档</a>。</p>
+<ol>
+<li><p>下载</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/ywdblog/certbot-letencrypt-wildcardcertificates-alydns-au</span><br><span class="line"><span class="built_in">cd</span> certbot-letencrypt-wildcardcertificates-alydns-au</span><br><span class="line"><span class="built_in">chmod</span> 0777 au.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置</p>
+<p>（1） domain.ini</p>
+<p> 如果 domain.ini 文件没有你的根域名，请自行添加。</p>
+<p> （2） au.sh</p>
+<p> 登录域名服务商的控制台获取 API 密钥，然后配置在 au.sh 文件中。</p>
+<ul>
+<li>ALY_KEY 和 ALY_TOKEN：阿里云 <a target="_blank" rel="noopener" href="https://help.aliyun.com/knowledge_detail/38738.html">API key 和 Secrec 官方申请文档</a></li>
+<li>TXY_KEY 和 TXY_TOKEN：腾讯云 <a target="_blank" rel="noopener" href="https://console.cloud.tencent.com/cam/capi">API 密钥官方申请文档</a></li>
+<li>HWY_KEY 和 HWY_TOKEN: 华为云 <a target="_blank" rel="noopener" href="https://support.huaweicloud.com/devg-apisign/api-sign-provide.html">API 密钥官方申请文档</a></li>
+<li>GODADDY_KEY 和 GODADDY_TOKEN：GoDaddy <a target="_blank" rel="noopener" href="https://developer.godaddy.com/getstarted">API 密钥官方申请文档</a></li>
+</ul>
+</li>
+<li><p>申请证书</p>
+<p> 首先我们测试是否有误：
+ </p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo certbot certonly \</span><br><span class="line">-d *.example.com \</span><br><span class="line">--manual --preferred-challenges dns \</span><br><span class="line">--dry-run \</span><br><span class="line">--manual-auth-hook <span class="string">&quot;/脚本目录/au.sh php aly add&quot;</span> \</span><br><span class="line">--manual-cleanup-hook <span class="string">&quot;/脚本目录/au.sh php aly clean&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p> <strong>注意：</strong> –manual-auth-hook 和 –manual-cleanup-hook 有三个参数：</p>
+<ul>
+<li>第一个代表你要选择那种语言(php&#x2F;python)</li>
+<li>第二个参数代表你的DNS厂商(aly&#x2F;txy)</li>
+<li>第三个参数是固定的(–manual-auth-hook中用add，–manual-clean-hook中用clean)</li>
+</ul>
+<p> 比如你要选择Python环境，可以将 –manual-auth-hook 输入修改为 “&#x2F;脚本目录&#x2F;au.sh python aly add”，–manual-cleanup-hook 输入修改为 “&#x2F;脚本目录&#x2F;au.sh python aly clean”</p>
+<p> 确认无误后，实际运行（去除 –dry-run 参数）：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo certbot certonly \</span><br><span class="line">-d *.example.com \</span><br><span class="line">--manual --preferred-challenges dns \</span><br><span class="line">--manual-auth-hook <span class="string">&quot;/脚本目录/au.sh php aly add&quot;</span> \</span><br><span class="line">--manual-cleanup-hook <span class="string">&quot;/脚本目录/au.sh php aly clean&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p> 参数解释:</p>
+<ul>
+<li><code>certonly</code>：表示采用验证模式，只会获取证书，不会为 web 服务器配置证书</li>
+<li><code>--manual</code>：表示插件</li>
+<li><code>--preferred-challenges dns</code>：表示采用 DNS 验证申请者合法性（是不是域名的管理者）</li>
+<li><code>--dry-run</code>：在实际申请&#x2F;更新证书前进行测试，强烈推荐</li>
+<li><code>-d</code>：表示需要为那个域名申请证书，可以有多个。</li>
+<li><code>--manual-auth-hook</code>：在执行命令的时候调用一个 hook 文件</li>
+<li><code>--manual-cleanup-hook</code>：清除 DNS 添加的记录</li>
+</ul>
+</li>
+<li><p>续约</p>
+<p> 手动续约</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo certbot renew</span><br></pre></td></tr></table></figure>
+
+<p>   自动续约</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编辑文件</span></span><br><span class="line">vim /etc/crontab</span><br><span class="line">或配置了crontab编辑器的情况下</span><br><span class="line">crontab -e</span><br><span class="line"></span><br><span class="line"><span class="comment"># 填入以下内容</span></span><br><span class="line">1 1 */1 * * sudo certbot renew --manual --preferred-challenges dns --deploy-hook <span class="string">&quot;service nginx restart&quot;</span> --manual-auth-hook <span class="string">&quot;/脚本目录/au.sh php aly add&quot;</span> --manual-cleanup-hook <span class="string">&quot;/脚本目录/au.sh php aly clean&quot;</span></span><br><span class="line"><span class="comment"># 注意只有成功renew证书，才会重新启动nginx</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Let&#039;s Encrypt免费申请SSL证书</p><p><a href="http://blog.labbee.top/2023/12/01/免费申请SSL证书/">http://blog.labbee.top/2023/12/01/免费申请SSL证书/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Marvin Yuan</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2023-12-01</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2023-12-01</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Network/">Network</a><a class="link-muted mr-2" rel="tag" href="/tags/SSL/">SSL</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/images/alipay_qrcode.jpeg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/images/wechatpay_qrcode.jpeg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/11/28/Ubuntu%E5%AE%89%E8%A3%85Nginx/"><span class="level-item">Ubuntu安装Nginx</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "a24b5d27d21d983422d5f0f5f6e5d181",
+            repo: "minfengyuan.github.io",
+            owner: "minfengyuan",
+            clientID: "4f8cf9de94c5771e040e",
+            clientSecret: "1b96d8fd8d4643d51ea0436f956c0c9ec9dbe0f2",
+            admin: ["minfengyuan"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/images/profile.jpg" alt="Marvin Yuan"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Marvin Yuan</p><p class="is-size-6 is-block">CV Engieer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>SuZhou</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">4</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">10</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/minfengyuan" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/minfengyuan"><i class="fab fa-github"></i></a></div></div></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/DL/"><span class="level-start"><span class="level-item">DL</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/OS/"><span class="level-start"><span class="level-item">OS</span></span><span class="level-end"><span class="level-item tag">5</span></span></a><ul><li><a class="level is-mobile" href="/categories/OS/ToolKits/"><span class="level-start"><span class="level-item">ToolKits</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/ToolKits/"><span class="level-start"><span class="level-item">ToolKits</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/CUDA/"><span class="tag">CUDA</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Docker/"><span class="tag">Docker</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Git/"><span class="tag">Git</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag">8</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Network/"><span class="tag">Network</span><span class="tag">4</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Nginx/"><span class="tag">Nginx</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/PyTorch/"><span class="tag">PyTorch</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Python/"><span class="tag">Python</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/SSL/"><span class="tag">SSL</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Windows/"><span class="tag">Windows</span><span class="tag">2</span></a></div></div></div></div></div><div class="column-right-shadow is-hidden-widescreen is-sticky"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3 is-sticky"><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-12-01T03:13:00.000Z">2023-12-01</time></p><p class="title"><a href="/2023/12/01/%E5%85%8D%E8%B4%B9%E7%94%B3%E8%AF%B7SSL%E8%AF%81%E4%B9%A6/">Let&#039;s Encrypt免费申请SSL证书</a></p><p class="categories"><a href="/categories/ToolKits/">ToolKits</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-11-28T06:40:00.000Z">2023-11-28</time></p><p class="title"><a href="/2023/11/28/Ubuntu%E5%AE%89%E8%A3%85Nginx/">Ubuntu安装Nginx</a></p><p class="categories"><a href="/categories/ToolKits/">ToolKits</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-11-21T06:54:00.000Z">2023-11-21</time></p><p class="title"><a href="/2023/11/21/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/">内网穿透</a></p><p class="categories"><a href="/categories/ToolKits/">ToolKits</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-11-20T01:02:00.000Z">2023-11-20</time></p><p class="title"><a href="/2023/11/20/%E9%83%A8%E7%BD%B2FRP%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/">部署FRP实现内网穿透</a></p><p class="categories"><a href="/categories/ToolKits/">ToolKits</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-11-17T08:12:00.000Z">2023-11-17</time></p><p class="title"><a href="/2023/11/17/1000%E7%A7%8D%E7%82%BC%E4%B8%B9%E6%89%8B%E6%B3%95/">1000种炼丹手法</a></p><p class="categories"><a href="/categories/DL/">DL</a></p></div></article></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#使用-certbot-申请-SSL-证书"><span class="level-left"><span class="level-item">1</span><span class="level-item">使用 certbot 申请 SSL 证书</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#安装-certbot"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">安装 certbot</span></span></a></li><li><a class="level is-mobile" href="#申请泛域名-SSL-证书以及配置自动续约"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">申请泛域名 SSL 证书以及配置自动续约</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="慎独" height="28"></a><p class="is-size-7"><span>&copy; 2023 Marvin Yuan</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p><p class="is-size-7">© 2023</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
